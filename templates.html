@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Monitoring and Skill Test App</title>
+</head>
+<body>
+    <h1>Welcome, {{ current_user.username }}!</h1>
+
+    {% if current_user.is_admin %}
+        <h2>Student Marks:</h2>
+        <ul>
+            {% for mark in marks %}
+                <li>{{ mark.skill }}: {{ mark.score }}/10</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h2>Task Monitoring:</h2>
+    <!-- Your existing task monitoring content -->
+
+    <h2>Skill Test:</h2>
+    <form action="{{ url_for('submit_skill_test') }}" method="post">
+        <ol>
+            {% for skill in skills %}
+                <li>{{ skill.question }}:
+                    <input type="text" name="user_answer" required>
+                </li>
+            {% endfor %}
+        </ol>
+        <button type="submit">Submit Skill Test</button>
+    </form>
+
+    {% if score is defined %}
+        <h3>Your Score: {{ score }} / {{ skills|length }}</h3>
+    {% endif %}
+
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
